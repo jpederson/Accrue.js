@@ -136,6 +136,12 @@
             rate_compare: "",
             term: "Format: 12m, 36m, 3y, 7y"
         },
+        response_basic: 
+            '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>'+
+            '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
+            '<p><strong>Total Payments:</strong><br />$%total_payments%</p>'+
+            '<p><strong>Total Interest:</strong><br />$%total_interest%</p>',
+        response_compare: "Save $%savings% in interest!",
         error_text: "Please fill in all fields.",
         callback: function ( elem, data ){}
     }
@@ -173,10 +179,13 @@
         // if valid, output into the output_elem that was passed into this function.
         if ( loan_info!==0 ) {
 
-            output_elem.html( '<p class="monthly-payments"><strong>Monthly Payment:</strong><br />$'+loan_info.payment_amount_formatted+'</p>'+
-                '<p class="number-payments"><strong>Number of Payments:</strong><br />'+loan_info.num_payments+'</p>'+
-                '<p class="total-payments"><strong>Total Payments:</strong><br />$'+loan_info.total_payments_formatted+'</p>'+
-                '<p class="total-interest"><strong>Total Interest:</strong><br />$'+loan_info.total_interest_formatted+'</p>' );
+            var output_content = options.response_basic
+                .replace( "%payment_amount%", loan_info.payment_amount_formatted )
+                .replace( "%num_payments%", loan_info.num_payments )
+                .replace( "%total_payments%", loan_info.total_payments_formatted )
+                .replace( "%total_interest%", loan_info.total_interest_formatted );
+
+            output_elem.html( output_content );
 
         } else {
 
@@ -206,7 +215,8 @@
                 loan_2: loan_2_info
             };
         if ( loan_1_info!==0 && loan_2_info!==0 ) {
-            output_elem.html( '<p class="total-savings">Save $'+(loan_1_info.total_interest-loan_2_info.total_interest).toFixed(2)+' in interest!</p>' );
+            var output_content = options.response_compare.replace( "%savings%", (loan_1_info.total_interest-loan_2_info.total_interest).toFixed(2) );
+            output_elem.html( '<p class="total-savings">'+output_content+'</p>' );
         } else {
             output_elem.html( '<p class="error">Please fill in all fields.</p>' );
         }
