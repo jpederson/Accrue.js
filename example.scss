@@ -1,0 +1,373 @@
+// styles for the accrue.js example page - none of these are required for your use of accrue.js
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italicitalic,300,600);
+
+$grey: #5f626f;
+$blue: #2db9ee;
+$gold: #ee9430;
+
+$padding: 20px;
+
+@mixin respond-to( $breakpoint ) {
+    @media only screen and (min-width: $breakpoint) { @content; }
+}
+
+@mixin font {
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-weight: 200;
+}
+
+@mixin font-bold {
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-weight: 600;
+}
+
+body {
+	margin: 0;
+	background: white;
+	font-size: 100%;
+	line-height: 160%;
+	color: $grey;
+
+	@include font;
+}
+
+a {
+	color: darken( $blue, 10% );
+	text-decoration: none;
+	border-bottom: 1px dotted darken( $blue, 10% );
+}
+
+b, strong, th, label {
+	@include font-bold;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	padding: 8px 0;
+	margin: 0;
+	font-weight: 200;
+}
+
+h1 {
+	font-size: 3em;
+	line-height: 120%;
+}
+
+h2 {
+	font-size: 2.4em;
+	line-height: 120%;
+}
+
+h3 {
+	font-size: 1.8em;
+	line-height: 120%;
+}
+
+hr {
+	border: 0;
+	border-bottom: 1px solid lighten( $grey, 40% );
+	height: 0;
+	margin: 20px 0;
+	clear: both;
+}
+
+label {
+	display: block;
+}
+
+small {
+	font-size: .85em;
+	color: lighten( $grey, 10% );
+}
+
+label {
+	color: lighten( $grey, 5% );
+}
+
+input[type=text] {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 15px;
+	font-size: 140%;
+	border: 0;
+
+	@include font;
+}
+
+button, input[type=submit], .btn, a.btn, .grey a.btn, .blue a.btn, .blue-dark a.btn, .gold a.btn {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 20px;
+	font-size: 1.5em;
+	border: 0;
+	background: white;
+	cursor: pointer;
+	margin: 0 $padding/2 $padding/4 0;
+	color: $grey;
+	text-decoration: none;
+	border: 0;
+	opacity: .9;
+
+	@include font;
+
+	&.wide {
+		width: 100%;
+	}
+
+	&.blue, &.gold, &.grey, &.blue-dark {
+		color: white;
+	}
+
+	&.blue {
+		background: $blue;
+	}
+
+	&.blue-dark {
+		background: darken( $blue, 20% );
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+pre {
+	overflow: auto;
+	padding: $padding/2 $padding*1.5;
+	background: darken( $grey, 10% );
+	color: white;
+}
+
+code {
+	padding: $padding/4;
+	margin: 0 $padding/4;
+	background: lighten( $grey, 40% );
+}
+
+dt {
+	padding: $padding/2 0 0 0;
+	margin: 0;
+	font-weight: 600;
+	font-size: 1.2em;
+
+	code {
+		background: transparent;
+	}
+}
+
+dd {
+	margin-bottom: $padding;
+}
+
+.wrap {
+	max-width: 1220px;
+	margin: 0 auto;
+}
+
+.header {
+	background: $blue;
+	color: white;
+	padding: $padding*2 $padding $padding $padding;
+
+	h1 {
+		font-size: 50px;
+		line-height: 40px;
+		font-weight: 300;
+	}
+
+	h3 {
+		font-size: 20px;
+		line-height: 20px;
+	}
+}
+
+.buttons {
+	padding: 20px 0 0;
+
+	a {
+		border: 0;
+	}
+}
+
+.block {
+	padding: $padding $padding $padding*3 $padding;
+}
+
+.footer {
+	text-align: center;
+}
+
+.top-link {
+	display: block;
+	text-align: center;
+}
+
+
+
+.grey, .blue, .gold, .blue-dark {
+	color: white;
+
+	a {
+		color: white;
+		border-color: white;
+	}
+}
+
+.grey {
+	background: $grey;
+	color: white;
+}
+
+.grey-light {
+	background: lighten( $grey, 50% );
+	color: darken( $grey, 10% );
+}
+
+.grey-lighter {
+	background: lighten( $grey, 55% );
+	color: darken( $grey, 10% );
+}
+
+.blue {
+	background: $blue;
+	color: white;
+}
+
+.blue-dark {
+	background: darken( $blue, 20% );
+	color: white;
+}
+
+.gold {
+	background: $gold;
+	color: white;
+}
+
+
+
+.results {
+	background: white;
+	padding: $padding/2 $padding;
+	margin-top: -$padding/4;
+	overflow: auto;
+
+	table {
+		min-width: 100%;
+
+		th {
+			white-space: nowrap;
+			padding: 2px 10px;
+		}
+
+		td {
+			padding: 2px;
+			text-align: center;
+		}	
+	}
+}
+
+
+
+.pad {
+	padding: $padding/2 $padding;
+}
+
+.clear {
+	clear: both;
+}
+
+.non-phone-only {
+	display: none;
+}
+
+@include respond-to( 500px ) {
+
+	.phone-only {
+		display: none;
+	}
+
+	.non-phone-only {
+		display: block;
+	}
+
+	.header {
+		padding: $padding*1.5;
+
+		h1 {
+			font-size: 80px;
+			line-height: 70px;
+		}
+
+		h3 {
+			font-size: 20px;
+			line-height: 20px;
+		}
+	}
+
+	.top-link {
+		float: right;
+	}
+
+	.block {
+		padding: $padding*1.5;
+	}
+
+	button, input[type=submit], .btn, a.btn, .grey a.btn, .blue a.btn, .blue-dark a.btn, .gold a.btn {
+		width: auto;
+		display: inline-block;
+	}
+
+	.pad {
+		padding: $padding/2 $padding*1.5;
+	}
+}
+
+@include respond-to( 768px ) {
+	.header {
+		padding: $padding*3 $padding*2 $padding*2;
+	}
+
+	.block {
+		padding: $padding*2 $padding*2 $padding*4;
+	}
+
+	.thirty, .fourty, .fifty, .sixty, .seventy {
+		float: left;
+		padding: 10px 3% 10px 0;
+	}
+
+	.thirty {
+		width: 27%;
+	}
+
+	.fourty {
+		width: 37%;
+	}
+
+	.fifty {
+		width: 47%;
+	}
+
+	.sixty {
+		width: 57%;
+	}
+
+	.seventy {
+		width: 67%;
+	}
+
+	.pad {
+		padding: $padding/2 $padding*3;
+	}
+}
+
+@include respond-to( 1024px ) {
+	.header {
+		padding-top: $padding*4;
+	}
+}
+
+@include respond-to( 1220px ) {
+}
+
