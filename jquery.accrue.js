@@ -184,6 +184,8 @@
 
 
     // CALCULATE BASIC
+    // for the basic calculation, we're just getting the values and 
+    // calculating loan info for a single loan.
     var calculateBasic = function( elem, options, output_elem ){
 
         // get the loan information from the current values in the form.
@@ -220,6 +222,8 @@
 
 
     // CALCULATE COMPARE
+    // The comparison mode gets 4 values from the form and calculates, then
+    // compares two different loans to determine savings in interest.
     var calculateComparison = function( elem, options, output_elem ){
 
         // Get information about the two different loans in question
@@ -263,6 +267,8 @@
 
 
     // CALCULATE AMORTIZATION SCHEDULE
+    // This method outputs a table with the repayment schedule
+    // for a single loan object.
     var calculateAmortization = function( elem, options, output_elem ){
         
         // Get the loan information so we can build out our amortization
