@@ -3,6 +3,7 @@
  * http://accruejs.com
  * Author: James Pederson (jpederson.com)
  * Licensed under the MIT, GPL licenses.
+ * Version: 1.1.0
  */
 
 ;(function( $, window, document, undefined ){
@@ -23,6 +24,7 @@
                 // inside our other bindings.
 	            var elem = $(this);
 
+                // Create the form div if it doesn't exist.
                 if ( !elem.find(".form").length ) {
                     elem.append( '<div class="form"></div>' );
                 }
@@ -31,6 +33,8 @@
                 var amount = get_field( elem, options, "amount" );
                 var rate = get_field( elem, options, "rate" );
                 var term = get_field( elem, options, "term" );
+
+                // If we're in comparison mode, grab an additiona field/value.
                 if ( options.mode=="compare" ) {
                     var rate_compare = get_field( elem, options, "rate_compare" );
                 }
@@ -46,37 +50,32 @@
 
                     // Set the output div as a variable so we can refer to it more easily.
                     var output_elem=$(options.response_output_div);
-                    log( output_elem );
+
                 }
 
 
-
-                // Do our calculations based on which mode we're in.
+                // Set the calculation method based on which mode we're in.
                 switch ( options.mode ) {
 
                     case "basic":
-
                         var calculation_method = calculateBasic;
-
                     break;
 
                     case "compare":
-
                         var calculation_method = calculateComparison;
-
                     break;
 
                     case "amortization":
-
                         var calculation_method = calculateAmortization;
-
                     break;
 
                 }
+
 
                 // Get the information about the loan.
                 calculation_method( elem, options, output_elem );
 
+                // Do some different things if the operation mode is "button"
                 if ( options.operation=="button" ) {
 
                     // If we are using button operation mode and the button doesn't exist, create one.
@@ -88,8 +87,8 @@
                     // of operate on keyup, let's set up a click event binding
                     // that performs the calculation.
                     elem.find("button, input[type=submit]").each(function(){
-                        event.preventDefault();
-                        $(this).click(function(){
+                        $(this).click(function( event ){
+                            event.preventDefault();
                             calculation_method( elem, options, output_elem );
                         });
                     });
@@ -110,7 +109,7 @@
                 // of operate on keyup, let's set up a click event binding
                 // that performs the calculation.
                 elem.find("form").each(function(){
-                    $(this).submit(function(){
+                    $(this).submit(function(event){
                         event.preventDefault();
                         calculation_method( elem, options, output_elem );
                     });
@@ -119,6 +118,7 @@
 	        });
 	    }
     });
+
 
     // DEFAULTS
     // Set up some default options for our plugin that can be overridden 
@@ -157,6 +157,7 @@
     }
 
 
+
     // GET FIELD
     // A function just for grabbing the value from a particular field.
     // We need this because if the field doesn't exist, the plugin will
@@ -166,14 +167,20 @@
         // Check for an input with a class of the name.
         var field=( elem.find("."+name).length ? elem.find("."+name) : ( elem.find(".accrue-"+name).length ? elem.find(".accrue-"+name) : ( elem.find( "input[name~="+name+"]" ).length ? elem.find( "input[name~="+name+"]" ) : "" ) ) );
         
+        // If we have the field value, return it right away so that the
+        // calculator doesn't write the field to the form div since we
+        // don't need it to.
         if ( field.length ) {
             return field.val();
         }
 
+        // If we've gotten here, no fields were found that match the
+        // criteria. Create the form field and return the default value.
         elem.find(".form").append('<div class="accrue-field-'+name+'"><p><label>'+options.field_titles[name]+':</label><input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+( options.field_comments[name].length>0 ? "<small>"+options.field_comments[name]+"</small>" : '' )+'</p></div>');
         return elem.find("."+name).val();
 
     }
+
 
 
     // CALCULATE BASIC
@@ -189,12 +196,14 @@
         // if valid, output into the output_elem that was passed into this function.
         if ( loan_info!==0 ) {
 
+            // replace the placeholders with the response values.
             var output_content = options.response_basic
                 .replace( "%payment_amount%", loan_info.payment_amount_formatted )
                 .replace( "%num_payments%", loan_info.num_payments )
                 .replace( "%total_payments%", loan_info.total_payments_formatted )
                 .replace( "%total_interest%", loan_info.total_interest_formatted );
 
+            // output the content to the actual output element.
             output_elem.html( output_content );
 
         } else {
@@ -203,6 +212,8 @@
             output_elem.html( '<p class="error">'+options.error_text+'</p>' );
         }
 
+        // run the callback function after the calculation is done, including
+        // the calculation info so it's available in the callback.
         options.callback( elem, loan_info );
     }
 
@@ -210,6 +221,10 @@
 
     // CALCULATE COMPARE
     var calculateComparison = function( elem, options, output_elem ){
+
+        // Get information about the two different loans in question
+        // and create a callback data variable that we'll pass into
+        // our callback function.
         var loan_1_info = $.loanInfo({
                 amount: get_field( elem, options, "amount" ),
                 rate: get_field( elem, options, "rate" ),
@@ -224,13 +239,24 @@
                 loan_1: loan_1_info,
                 loan_2: loan_2_info
             };
+
+        // If both loans are good, populate response element with info,
+        // else error.
         if ( loan_1_info!==0 && loan_2_info!==0 ) {
+            
+            // replace our savings placeholder in the response text with
+            // the real difference in interest.
             var output_content = options.response_compare.replace( "%savings%", (loan_1_info.total_interest-loan_2_info.total_interest).toFixed(2) );
             output_elem.html( '<p class="total-savings">'+output_content+'</p>' );
+        
         } else {
+
+            // output an error
             output_elem.html( '<p class="error">Please fill in all fields.</p>' );
+
         }
 
+        // run the callback, passing our loan data into it.
         options.callback( elem, callback_data );
     }
 
@@ -238,12 +264,21 @@
 
     // CALCULATE AMORTIZATION SCHEDULE
     var calculateAmortization = function( elem, options, output_elem ){
+        
+        // Get the loan information so we can build out our amortization
+        // schedule table.
         var loan_info = $.loanInfo({
                 amount: get_field( elem, options, "amount" ),
                 rate: get_field( elem, options, "rate" ),
                 term: get_field( elem, options, "term" )
             });
+
+        // If the loan info's good, start buildin'!
         if ( loan_info!==0 ) {
+
+            // Set some initial variables for the table header, interest
+            // per payment, amount from balance, and counter variables
+            // to values as we list rows.
             var output_content = '<table class="accrue-amortization">'+
                     '<tr>'+
                     '<th class="accrue-payment-number">#</th>'+
@@ -257,16 +292,23 @@
                 counter_interest = 0,
                 counter_payment = 0,
                 counter_balance = parseInt(loan_info.original_amount);
+
+            // Start appending the table rows to our output variable.
             for ( var i=0; i<loan_info.num_payments; i++) { 
+
+                // Record the payment in our counter variables.
                 counter_interest = counter_interest+interest_per_payment;
                 counter_payment = counter_payment+loan_info.payment_amount;
                 counter_balance = counter_balance-amount_from_balance;
 
-                //
+                // bold the last row of the table by using <th>s for
+                // the values. 
                 var cell_tag = "td";
                 if ( i==(loan_info.num_payments-1) ) {
                     cell_tag = "th";
                 }
+
+                // Append a row to the table
                 output_content = output_content+ 
                     '<tr>'+
                     '<'+cell_tag+' class="accrue-payment-number">'+(i+1)+'</'+cell_tag+'>'+
@@ -276,13 +318,20 @@
                     '<'+cell_tag+' class="accrue-balance">$'+counter_balance.toFixed(2)+'</'+cell_tag+'>'+
                     '</tr>';
             }
+
+            // Finish off our table tag.
             output_content = output_content+
                 '</table>';
+
+            // Push our output content into the output element.
             output_elem.html( output_content );
         } else {
+
+            // Values aren't good yet, show the error.
             output_elem.html( '<p class="error">Please fill in all fields.</p>' );
         }
 
+        // Execute callback, passing in loan information.
         options.callback( elem, loan_info );
     }
 
@@ -290,12 +339,13 @@
 
     // BASIC LOGGING FUNCTION
     // Checks to see if the console is available before outputting
-    // anything through console.log()
+    // anything through console.log(). Prevent issues with IE.
     var log = function( message ){
         if ( window.console ) {
             console.log( message );
         }
     }
+
 
 
     // GENERAL LOAN INFORMATION FUNCTION
