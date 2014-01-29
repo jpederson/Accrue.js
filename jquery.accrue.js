@@ -36,13 +36,20 @@
                 }
 
                 // If we are using the default results div and it doesn't exist, create it.
-                if ( elem.find(".results").length==0 ) {
-                    elem.append('<div class="results"></div>');
+                if ( options.response_output_div===".results" ) {
+                    if ( elem.find(".results").length==0 ) {
+                        elem.append('<div class="results"></div>');
+                    }
+                    // Set the output div as a variable so we can refer to it more easily.
+                    var output_elem=elem.find(".results");
+                } else {
+
+                    // Set the output div as a variable so we can refer to it more easily.
+                    var output_elem=$(options.response_output_div);
+                    log( output_elem );
                 }
 
 
-                // Set the output div as a variable so we can refer to it more easily.
-                var output_elem=elem.find(".results");
 
                 // Do our calculations based on which mode we're in.
                 switch ( options.mode ) {
@@ -89,6 +96,8 @@
 
                 } else {
 
+                    // Bind to the select and input elements so that we calculate
+                    // on keyup (or change in the case of the select list).
                     elem.find("input, select").each(function(){
                         $(this).bind( "keyup change", function(){
                             calculation_method( elem, options, output_elem );
@@ -136,6 +145,7 @@
             rate_compare: "",
             term: "Format: 12m, 36m, 3y, 7y"
         },
+        response_output_div: ".results",
         response_basic: 
             '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>'+
             '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
