@@ -1,5 +1,5 @@
 <!doctype html>
-<title>Accrue.js Examples</title>
+<title>Accrue.js - A Loan and Interest Calculation Plugin for jQuery</title>
 <meta name="viewport" content="width=device-width">
 <link href="example.css" rel="stylesheet" type="text/css">
 
@@ -44,6 +44,8 @@
 					Takes an additional rate to be provided, and returns savings between the two rates.</li>
 				<li><strong><a href="#demo-amortization">Loan amortization schedule</a></strong><br>
 					Takes the same parameters as the basic loan calculation, but displays a complete loan repayment schedule.</li>
+				<li><strong><a href="#docs">Calculation Only (JSON Response)</a></strong><br>
+					For ease of use and complete customization, there's always the simple calculation function that returns a JSON object containing the loan information.</li>
 			</ul>
 			<p>Explore the examples on this page to see what it can do, or visit the Github repo to download the code and start playing!</p>
 
@@ -347,9 +349,7 @@ $(document).ready(function(){
 			<a href="#documentation" class="top-link">^ Top of Section</a>
 
 			<h2>Calculation Only (JSON)</h2>
-
 			<p>None of the <code>$( selector ).accrue();</code> options doin' it for you? Never fear - I left the <code>$.loanInfo( param_obj );</code> function public, so you can directly call it to perform a calculation and get a JSON response.</p>
-
 <pre>var loan_info = $.loanInfo({
     amount: "$7,500",
     rate: "7%",
