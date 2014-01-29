@@ -272,15 +272,19 @@ $(document).ready(function(){
 					<dd>Provide a callback function with code to be executed whenever a calculation occurs. Use this to add animations to the divs or update a separate response div with your own formatted response. Here's an example of how you'd set up for this:</dd>
 <pre>$( selector ).accrue({
 	callback: function( elem, data ){
+		
+		if ( data===0 ) {
+			// ERROR FUNCTIONALITY HERE
+		} else {
+			// SUCCESS FUNCTIONALITY HERE
 
-		// YOUR FUNCTIONALITY HERE
-		// here are a few examples:
+			// find elements inside the calculator div, and do things with them.
+			elem.find( ".results:hidden" ).slideDown( 300 );
 
-		// find elements inside the calculator div, and do things with them.
-		elem.find( ".results:hidden" ).slideDown( 300 );
-
-		// dump the calculation info to console to learn how to use it.
-		console.log( data );
+			// dump the calculation info to console to learn how to use it.
+			console.log( data );
+		}
+		
 	}
 });</pre>
 					
