@@ -247,10 +247,15 @@
         // If both loans are good, populate response element with info,
         // else error.
         if ( loan_1_info!==0 && loan_2_info!==0 ) {
-            
+            if ( loan_1_info.total_interest-loan_2_info.total_interest > 0 ) {
+                callback_data.savings = loan_1_info.total_interest-loan_2_info.total_interest;
+            } else {
+                callback_data.savings = 0;
+            }
+
             // replace our savings placeholder in the response text with
             // the real difference in interest.
-            var output_content = options.response_compare.replace( "%savings%", (loan_1_info.total_interest-loan_2_info.total_interest).toFixed(2) );
+            var output_content = options.response_compare.replace( "%savings%", callback_data.savings.toFixed(2) );
             output_elem.html( '<p class="total-savings">'+output_content+'</p>' );
         
         } else {
