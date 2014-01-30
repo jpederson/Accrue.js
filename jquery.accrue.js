@@ -261,7 +261,7 @@
         } else {
 
             // output an error
-            output_elem.html( '<p class="error">Please fill in all fields.</p>' );
+            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
 
         }
 
@@ -339,7 +339,7 @@
         } else {
 
             // Values aren't good yet, show the error.
-            output_elem.html( '<p class="error">Please fill in all fields.</p>' );
+            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
         }
 
         // Execute callback, passing in loan information.
