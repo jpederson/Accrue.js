@@ -132,17 +132,15 @@ button, input[type=submit], .btn, a.btn, .grey a.btn, .blue a.btn, .blue-dark a.
 	}
 }
 
-pre {
-	overflow: auto;
-	padding: $padding/2 $padding*1.5;
-	background: darken( $grey, 10% );
-	color: white;
-}
-
 code {
 	padding: $padding/4;
 	margin: 0 $padding/4;
 	background: lighten( $grey, 40% );
+}
+
+.gist {
+	font-size: .8em;
+	line-height: 1.3em;
 }
 
 dt {

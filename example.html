@@ -61,7 +61,7 @@
 
 			<div class="fourty">
 				<p>Grabs three values from the form, and returns general information about a loan.</p>
-				<pre>$(".calculator-loan").accrue();</pre>
+				<script src="https://gist.github.com/jpederson/9497808.js"></script>
 			</div>
 
 			<div class="calculator-loan">
@@ -89,9 +89,7 @@
 
 			<div class="fourty">
 				<p>Grabs four values from the form, and returns general information about a loan.</p>
-<pre>$(".calculator-compare").accrue({
-	mode: "compare"
-});</pre>
+				<script src="https://gist.github.com/jpederson/9497819.js"></script>
 			</div>
 
 			<div class="calculator-compare">
@@ -123,9 +121,7 @@
 			</div>
 
 			<div class="fifty">
-<pre>$(".calculator-amortization").accrue({
-	mode: "amortization"
-});</pre>
+				<script src="https://gist.github.com/jpederson/9497832.js"></script>
 			</div>
 
 			<div class="calculator-amortization">
@@ -191,16 +187,8 @@
 
 			<h3>The HTML</h3>
 			<p>There are a ton of <a href="#docs-options">plugin options</a> and ways to <a href="#docs-customize">customize</a> your calculators, but for this chunk of code, we'll just focus on the bare minimum of what you need to start seeing a working calculator:</p>
+			<script src="https://gist.github.com/jpederson/9497206.js"></script>
 
-<pre>
-&lt;div class="calculator"&gt;&lt;/div&gt;
-&lt;script src="http://code.jquery.com/jquery-1.10.1.min.js"&gt;&lt;/script&gt;
-&lt;script src="jquery.accrue.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-$(document).ready(function(){
-	$(".calculator").accrue();
-});
-&lt;/script&gt;</pre>
 		</div>
 	</div>
 
@@ -213,39 +201,8 @@ $(document).ready(function(){
 
 			<p>I pulled from the best options plugin templates I could find to provide the most flexible 
 				plugin possible. I still want to add more, but here's a complete example with all the current default option values.</p>
-
-<pre>$( selector ).accrue({
-    mode: "basic",
-    operation: "keyup",
-    default_values: {
-        amount: "$7,500",
-        rate: "7%",
-        rate_compare: "1.49%",
-        term: "36m",
-    },
-    field_titles: {
-        amount: "Loan Amount",
-        rate: "Rate (APR)",
-        rate_compare: "Comparison Rate",
-        term: "Term"
-    },
-    button_label: "Calculate",
-    field_comments: {
-        amount: "",
-        rate: "",
-        rate_compare: "",
-        term: "Format: 12m, 36m, 3y, 7y"
-    },
-    response_output_div: ".results",
-    response_basic: 
-        '&lt;p&gt;&lt;strong&gt;Monthly Payment:&lt;/strong&gt;&lt;br&gt;$%payment_amount%&lt;/p&gt;'+
-        '&lt;p&gt;&lt;strong&gt;Number of Payments:&lt;/strong&gt;&lt;br&gt;%num_payments%&lt;/p&gt;'+
-        '&lt;p&gt;&lt;strong&gt;Total Payments:&lt;/strong&gt;&lt;br&gt;$%total_payments%&lt;/p&gt;'+
-        '&lt;p&gt;&lt;strong&gt;Total Interest:&lt;/strong&gt;&lt;br&gt;$%total_interest%&lt;/p&gt;',
-    response_compare: "Save $%savings% in interest!",
-    error_text: "Please fill in all fields.",
-    callback: function ( elem, data ){}
-});</pre>
+			
+			<script src="https://gist.github.com/jpederson/9496630.js"></script>
 
 			<div class="pad">
 				<dt><code>mode</code></dt>
@@ -270,23 +227,7 @@ $(document).ready(function(){
 					<dd>Adjust the message that displays when any one of the inputs isn't populated.</dd>
 				<dt><code>callback( elem )</code></dt>
 					<dd>Provide a callback function with code to be executed whenever a calculation occurs. Use this to add animations to the divs or update a separate response div with your own formatted response. Here's an example of how you'd set up for this:</dd>
-<pre>$( selector ).accrue({
-	callback: function( elem, data ){
-		
-		if ( data===0 ) {
-			// ERROR FUNCTIONALITY HERE
-		} else {
-			// SUCCESS FUNCTIONALITY HERE
-
-			// find elements inside the calculator div, and do things with them.
-			elem.find( ".results:hidden" ).slideDown( 300 );
-
-			// dump the calculation info to console to learn how to use it.
-			console.log( data );
-		}
-		
-	}
-});</pre>
+				<script src="https://gist.github.com/jpederson/9496731.js"></script>
 					
 			</div>
 
@@ -305,42 +246,27 @@ $(document).ready(function(){
 
 			<h3>Create Your Own Inputs</h3>
 			<p>If you don't like the way the plugin auto-generates a field, simply create the field in your calculator div with the correct class or name, and the plugin will use your field instead of generating its own. If you create your own inputs in the calculator, it's also a good idea to add a <code>div.form</code> inside the calculator div and then place your field inside it, like so:</p>
-			<pre>&lt;div class="calculator"&gt;
-	&lt;div class="form"&gt;
-		&lt;!--  your fields here.  --&gt;
-	&lt;/div&gt;
-&lt;/div&gt;</pre>
+			<script src="https://gist.github.com/jpederson/9496937.js"></script>
 			<p>Doing this will ensure that any fields that the plugin has to generate, will show up directly after the fields you added. Here are a few details on the different fields, types of inputs, and the names or classes that the plugin will detect.</p>
 
 			<div class="pad">
 
 				<dt>Amount Input</dt>
 					<dd>Generally, this should be an <code>input[type=text]</code> (though <code>select</code> tags are also allowed). Any of these classes or names will work (in order of detection):</dd>
-					<pre>&lt;input type="text" class="amount" value="$7,500"&gt;
-&lt;input type="text" class="accrue-amount" value="$7,500"&gt;
-&lt;input type="text" name="amount" value="$7,500"&gt;
-&lt;input type="text" name="loan-amount" value="$7,500"&gt;</pre>
-					
+					<script src="https://gist.github.com/jpederson/9496947.js"></script>
 
 				<dt>Rate Input</dt>
 					<dd>The rate can be either an <code>input[type=text]</code> or <code>select</code>. Any of these classes or names will work (in order of detection):</dd>
-					<pre>&lt;input type="text" class="rate" value="7%"&gt;
-&lt;input type="text" class="accrue-rate" value="7%"&gt;
-&lt;select class="rate"&gt;&lt;option value="7"&gt;7%&lt;/option&gt;&lt;option value="8"&gt;8%&lt;/option&gt;&lt;/select&gt;</pre>
+					<script src="https://gist.github.com/jpederson/9496957.js"></script>
 					
 				<dt>Comparison Rate Input</dt>
 					<dd>This follows all the same requirements as the <code>rate</code> field, except that the field name or class must be <code>rate_compare</code>. Any of these classes or names will work (in order of detection):</dd>
-					<pre>&lt;input type="text" class="rate_compare" value="7%"&gt;
-&lt;select class="rate_compare"&gt;&lt;option value="7"&gt;7%&lt;/option&gt;&lt;option value="8"&gt;8%&lt;/option&gt;&lt;/select&gt;
-&lt;input type="text" class="accrue-rate_compare" value="7%"&gt;</pre>
+					<script src="https://gist.github.com/jpederson/9497072.js"></script>
 					<dd><small>Note the <code>select</code> list. This could be used to create a picklist of credit score ranges and the rate that your financial institutions' loan would be at for that score range - this would allow your website visitors to see how much they could save in interest if they got their loan from you.</small></dd>
 
 				<dt>Term Input</dt>
 					<dd>The term field can be an <code>input[type=text]</code> or <code>select</code> tag. Any of these classes or names will work (in order of detection):</dd>
-					<pre>&lt;input type="text" class="term" value="36m"&gt;
-&lt;select class="term"&gt;&lt;option value="36m"&gt;36 months&lt;/option&gt;&lt;option value="4y"&gt;4 years&lt;/option&gt;&lt;/select&gt;
-&lt;input type="text" class="accrue-term" value="36m"&gt;
-&lt;input type="text" name="term" value="36m"&gt;</pre>
+					<script src="https://gist.github.com/jpederson/9497355.js"></script>
 
 			</div>
 
@@ -354,13 +280,8 @@ $(document).ready(function(){
 
 			<h2>Calculation Only (JSON)</h2>
 			<p>None of the <code>$( selector ).accrue();</code> options doin' it for you? Never fear - I left the <code>$.loanInfo( param_obj );</code> function public, so you can directly call it to perform a calculation and get a JSON response.</p>
-<pre>var loan_info = $.loanInfo({
-    amount: "$7,500",
-    rate: "7%",
-    term: "36m"
-});
-// log the calculation data for test purposes
-console.log( loan_info );</pre>
+			<script src="https://gist.github.com/jpederson/9497384.js"></script>
+
 			<div class="pad">
 				<dt><code>amount</code></dt>
 					<dd>The <code>amount</code> property can contain any characters. All but the numbers <code>0123456789</code> and dots <code>.</code> will be stripped out, so that no errors can occur - even when those wonderful users enter characters that have no place in math equations.</dd>
@@ -373,16 +294,8 @@ console.log( loan_info );</pre>
 
 			<h3>Response JSON</h3>
 			<p>The code sample above would output this JSON object in the javascript console.</p>
-<pre>{
-	num_payments: 36,
-	original_amount: "7500",
-	payment_amount: 231.5782264902889,
-	payment_amount_formatted: "231.58",
-	total_interest: 836.8161536504012,
-	total_interest_formatted: "836.82",
-	total_payments: 8336.816153650401,
-	total_payments_formatted: "8336.82"
-}</pre>
+			<script src="https://gist.github.com/jpederson/9497439.js"></script>
+
 		</div>
 	</div>
 
@@ -422,7 +335,7 @@ console.log( loan_info );</pre>
 	</div>
 
 </div>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="jquery.accrue.min.js"></script>
 <script>
 $(document).ready(function(){
