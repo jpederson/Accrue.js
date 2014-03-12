@@ -40,7 +40,6 @@ module.exports = function(grunt) {
         // uglify to concat & minify
         uglify: {
             js: {
-                expand: true,
                 files: {
                     'jquery.accrue.min.js': 'jquery.accrue.js',
                 }
