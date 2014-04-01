@@ -170,8 +170,12 @@
         // If we have the field value, return it right away so that the
         // calculator doesn't write the field to the form div since we
         // don't need it to.
-        if ( field.length ) {
+        if ( typeof( field ) !== "string" ) {
             return field.val();
+        }
+
+        if ( name == "term_compare" ) {
+            return false;
         }
 
         // If we've gotten here, no fields were found that match the
@@ -230,7 +234,7 @@
         var term_compare = get_field( elem, options, "term_compare" );
 
         // if the comparison term is empty, use the normal term field
-        if ( term_compare.length == 0 ) {
+        if ( typeof( term_compare ) == "boolean" ) {
             term_compare = get_field( elem, options, "term" );
         }
 
