@@ -226,6 +226,14 @@
     // compares two different loans to determine savings in interest.
     var calculateComparison = function( elem, options, output_elem ){
 
+        // see if there's a comparison term
+        var term_compare = get_field( elem, options, "term_compare" );
+
+        // if the comparison term is empty, use the normal term field
+        if ( term_compare.length == 0 ) {
+            term_compare = get_field( elem, options, "term" );
+        }
+
         // Get information about the two different loans in question
         // and create a callback data variable that we'll pass into
         // our callback function.
@@ -237,7 +245,7 @@
             loan_2_info = $.loanInfo({
                 amount: get_field( elem, options, "amount" ),
                 rate: get_field( elem, options, "rate_compare" ),
-                term: get_field( elem, options, "term" )
+                term: term_compare
             }),
             callback_data = {
                 loan_1: loan_1_info,
