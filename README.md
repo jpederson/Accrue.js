@@ -24,5 +24,5 @@ For the most basic usage of the plugin, all you need is the code below. Of cours
 	});
 	</script>
 
-For more information on the different options and customizations, refer to the example.html file in this repo, or visit http://accruejs.com/ to see the same demos and documentation from the example file.
+For more information on the different options and customizations, refer to the index.html file in this repo, or visit http://accruejs.com/ to see the same demos and documentation from the example file.
 

@@ -341,62 +341,46 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="jquery.accrue.min.js"></script>
 <script>
+
+
+// start accrue.js
 $(document).ready(function(){
 
+	// set up normal loan calculation
 	$(".calculator-loan").accrue();
 
+
+	// set up the comparison calculator form.
 	$(".calculator-compare").accrue({
 		mode: "compare"
 	});
 
+
+	// set up the amortization schedule calculator
 	$(".calculator-amortization").accrue({
 		mode: "amortization"
 	});
 
-
 });
 
 
-$(function() {
- 
-  // scroll handler
-  var scrollToAnchor = function( id ) {
- 
-    // grab the element to scroll to based on the name
-    var elem = $("a[name='"+ id +"']");
- 
-    // if that didn't work, look for an element with our ID
-    if ( typeof( elem.offset() ) === "undefined" ) {
-      elem = $("#"+id);
-    }
- 
-    // if the destination element exists
-    if ( typeof( elem.offset() ) !== "undefined" ) {
- 
-      // do the scroll
-      $('html, body').animate({
-              scrollTop: elem.offset().top
-      }, 1000 );
- 
-    }
-  };
- 
-  // bind to click event
-  $("a").click(function( event ) {
- 
-    // only do this if it's an anchor link
-    if ( $(this).attr("href").match("#") ) {
- 
-      // cancel default event propagation
-      event.preventDefault();
- 
-      // scroll to the location
-      var href = $(this).attr('href').replace('#', '')
-      scrollToAnchor( href );
- 
-    }
- 
-  });
- 
-});
+
+
+// ------------------------------------------------
+// none of the code below is required for accrue.js
+// ------------------------------------------------
+
+
+// smooth scrollin'
+$(function(){var a=function(a){var b=$("a[name='"+a+"']");"undefined"==typeof b.offset()&&(b=$("#"+a)),"undefined"!=typeof b.offset()&&$("html, body").animate({scrollTop:b.offset().top},1e3)};$("a").click(function(b){if($(this).attr("href").match("#")){b.preventDefault();var c=$(this).attr("href").replace("#","");a(c)}})});
+
+
+// analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-614793-8', 'accruejs.com');
+ga('send', 'pageview');
+
 </script>
