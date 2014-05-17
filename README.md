@@ -15,14 +15,16 @@ Usage
 
 For the most basic usage of the plugin, all you need is the code below. Of course, you may need to adjust src properties based on where you store files, and you'll want to add styles - but the core functionality will be there.
 
-	<div class="calculator"></div>
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="jquery.accrue.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		$(".calculator").accrue();
-	});
-	</script>
+```html
+<div class="calculator"></div>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="jquery.accrue.min.js"></script>
+<script>
+$(document).ready(function(){
+	$(".calculator").accrue();
+});
+</script>
+```
 
 For more information on the different options and customizations, refer to the index.html file in this repo, or visit http://accruejs.com/ to see the same demos and documentation from the example file.
 
