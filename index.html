@@ -37,25 +37,12 @@
 
 			<h1>Demos</h1>
 			<p>Enough talk, let's check out some demos!</p>
-			<ul>
-				<li><strong><a href="#demo-basic">Basic loan calculation</a></strong><br>
-					Returns monthly payment, total payments, and total interest over the life of the loan.</li>
-				<li><strong><a href="#demo-compare">Interest comparison calculator</a></strong><br>
-					Takes an additional rate to be provided, and returns savings between the two rates.</li>
-				<li><strong><a href="#demo-amortization">Loan amortization schedule</a></strong><br>
-					Takes the same parameters as the basic loan calculation, but displays a complete loan repayment schedule.</li>
-				<li><strong><a href="#docs-json">Calculation Only (JSON Response)</a></strong><br>
-					For ease of use and complete customization, there's always the simple calculation function that returns a JSON object containing the loan information.</li>
-			</ul>
-			<p>Explore the examples on this page to see what it can do, or visit the Github repo to download the code and start playing!</p>
 
 		</div>
 	</div>
 
-	<a name="demo-basic"></a>
 	<div class="block grey-lighter">
 		<div class="wrap">
-			<a href="#demos" class="top-link">^ Top of Section</a>
 
 			<h2>Basic Loan Calculation</h2>
 
@@ -80,10 +67,8 @@
 		</div>
 	</div>
 
-	<a name="demo-compare"></a>
 	<div class="block grey-light">
 		<div class="wrap">
-			<a href="#demos" class="top-link">^ Top of Section</a>
 
 			<h2>Interest Savings Calculation</h2>
 
@@ -109,10 +94,8 @@
 		</div>
 	</div>
 
-	<a name="demo-amortization"></a>
 	<div class="block grey-lighter">
 		<div class="wrap">
-			<a href="#demos" class="top-link">^ Top of Section</a>
 
 			<h2>Amortization Schedule Calculation</h2>
 
@@ -142,28 +125,12 @@
 	</div>
 
 	<a name="documentation"></a>
-	<div class="block grey">
-		<div class="wrap">
-
-			<h1 class="phone-only">Docs</h1>
-			<h1 class="non-phone-only">Documentation</h1>
-			<p>Let's go over some code!</p>
-			<ul>
-				<li><a href="#docs-intro">Introduction</a></li>
-				<li><a href="#docs-options">Plugin Options</a></li>
-				<li><a href="#docs-customization">Customization</a></li>
-				<li><a href="#docs-json">Calculation Only (JSON Response)</a></li>
-			</ul>
-
-		</div>
-	</div>
-
-	<a name="docs-intro"></a>
-	<div class="block grey-lighter">
+	<div class="block grey-light">
 		<div class="wrap">
 			<a href="#documentation" class="top-link">^ Top of Section</a>
 
-			<h2>Introduction</h2>
+			<h1 class="phone-only">Docs</h1>
+			<h1 class="non-phone-only">Documentation</h1>
 			<p>Accrue.js is a jQuery plugin, so it requires a version of jQuery to be installed. The only other file you need to get started is <code>jquery.accrue.min.js</code>.</p>
 
 			<hr>
@@ -189,116 +156,10 @@
 			<p>There are a ton of <a href="#docs-options">plugin options</a> and ways to <a href="#docs-customize">customize</a> your calculators, but for this chunk of code, we'll just focus on the bare minimum of what you need to start seeing a working calculator:</p>
 			<script src="https://gist.github.com/jpederson/9497206.js"></script>
 
-		</div>
-	</div>
-
-	<a name="docs-options"></a>
-	<div class="block grey-light">
-		<div class="wrap">
-			<a href="#documentation" class="top-link">^ Top of Section</a>
-
-			<h2>Plugin Options</h2>
-
-			<p>I pulled from the best options plugin templates I could find to provide the most flexible 
-				plugin possible. I still want to add more, but here's a complete example with all the current default option values.</p>
-			
-			<script src="https://gist.github.com/jpederson/9496630.js"></script>
-
-			<div class="pad">
-				<dt><code>mode</code></dt>
-					<dd>The <code>mode</code> option has 3 settings: <code>basic</code> (default), <code>compare</code>, or <code>amortization</code>. The demos above illustrate the difference between the modes.</dd>
-				<dt><code>operation</code></dt>
-					<dd>The <code>operation</code> option has two settings: <code>keyup</code> and <code>button</code>. <code>keyup</code>, the default option, will do the calculation when the user changes a value in an input. The <code>button</code> option forces a button to be displayed in the form that must be clicked in order to do the calculation.</dd>
-				<dt><code>default_values</code></dt>
-					<dd>The <code>default_values</code> option is used to set initial values for the fields in the form. This only takes effect when the plugin is creating fields for you - if you are manually creating fields in your calculator form, the plugin will grab the value (including an empty value) from the code you specify. See the <a href="#docs-customization">customization</a> section for more information about that.</dd>
-				<dt><code>field_titles</code></dt>
-					<dd>Add this section and adjust the values to override field labels on generated form elements. This doesn't take effect for inputs that you manually supply in the calculator container.</dd>
-				<dt><code>button_label</code></dt>
-					<dd>Adjust the <code>button_label</code> property to set the text (and other HTML) to display on the button that the plugin generates. This doesn't take effect if you supply your own inputs.</dd>
-				<dt><code>field_comments</code></dt>
-					<dd>This property lets you add or modify the text that shows up below fields generated by the plugin. This doesn't take effect for inputs that you manually supply in the calculator container.</dd>
-				<dt><code>response_output_div</code></dt>
-					<dd>The selector for the div to which the plugin will output the response. Use this parameter if you need to output the response to a div that's not inside the calculator element and doesn't have a class of 'results'.</dd>
-				<dt><code>response_basic</code></dt>
-					<dd>Adjust the message that displays when outputting <code>mode: 'basic'</code> calculations. Use <code>%payment_amount%</code>, <code>%num_payments%</code>, <code>%total_payments%</code>, and <code>%total_interest%</code> to tell the plugin where to put the calculation totals.</dd>
-				<dt><code>response_compare</code></dt>
-					<dd>Adjust the message that displays when outputting <code>mode: 'compare'</code> calculations. Use <code>%savings%</code> to tell the plugin where to place the calculated total savings.</dd>
-				<dt><code>error_text</code></dt>
-					<dd>Adjust the message that displays when any one of the inputs isn't populated.</dd>
-				<dt><code>callback( elem )</code></dt>
-					<dd>Provide a callback function with code to be executed whenever a calculation occurs. Use this to add animations to the divs or update a separate response div with your own formatted response. Here's an example of how you'd set up for this:</dd>
-				<script src="https://gist.github.com/jpederson/9496731.js"></script>
-					
-			</div>
-
-		</div>
-	</div>
-
-	<a name="docs-customization"></a>
-	<div class="block grey-lighter">
-		<div class="wrap">
-			<a href="#documentation" class="top-link">^ Top of Section</a>
-
-			<h2>Customization</h2>
-			<p>This section covers how calculators generated by the plugin can be customized to fit your design or CMS needs.</p>
-
 			<hr>
 
-			<h3>Create Your Own Inputs</h3>
-			<p>If you don't like the way the plugin auto-generates a field, simply create the field in your calculator div with the correct class or name, and the plugin will use your field instead of generating its own. If you create your own inputs in the calculator, it's also a good idea to add a <code>div.form</code> inside the calculator div and then place your field inside it, like so:</p>
-			<script src="https://gist.github.com/jpederson/9496937.js"></script>
-			<p>Doing this will ensure that any fields that the plugin has to generate, will show up directly after the fields you added. Here are a few details on the different fields, types of inputs, and the names or classes that the plugin will detect.</p>
-
-			<div class="pad">
-
-				<dt>Amount Input</dt>
-					<dd>Generally, this should be an <code>input[type=text]</code> (though <code>select</code> tags are also allowed). Any of these classes or names will work (in order of detection):</dd>
-					<script src="https://gist.github.com/jpederson/9496947.js"></script>
-
-				<dt>Rate Input</dt>
-					<dd>The rate can be either an <code>input[type=text]</code> or <code>select</code>. Any of these classes or names will work (in order of detection):</dd>
-					<script src="https://gist.github.com/jpederson/9496957.js"></script>
-					
-				<dt>Comparison Rate Input</dt>
-					<dd>This follows all the same requirements as the <code>rate</code> field, except that the field name or class must be <code>rate_compare</code>. Any of these classes or names will work (in order of detection):</dd>
-					<script src="https://gist.github.com/jpederson/9497072.js"></script>
-					<dd><small>Note the <code>select</code> list. This could be used to create a picklist of credit score ranges and the rate that your financial institutions' loan would be at for that score range - this would allow your website visitors to see how much they could save in interest if they got their loan from you.</small></dd>
-
-				<dt>Term Input</dt>
-					<dd>The term field can be an <code>input[type=text]</code> or <code>select</code> tag. Any of these classes or names will work (in order of detection):</dd>
-					<script src="https://gist.github.com/jpederson/9497355.js"></script>
-
-				<dt>Comparison Term Input</dt>
-					<dd>This field <strong>must</strong> be added to the form manually - by default the calculator uses the same term for both of the loans it's comparing, so to override the comparison term, simply create a field in this format:</dd>
-					<script src="https://gist.github.com/jpederson/9919835.js"></script>
-
-			</div>
-
-		</div>
-	</div>
-
-	<a name="docs-json"></a>
-	<div class="block grey-light">
-		<div class="wrap">
-			<a href="#documentation" class="top-link">^ Top of Section</a>
-
-			<h2>Calculation Only (JSON)</h2>
-			<p>None of the <code>$( selector ).accrue();</code> options doin' it for you? Never fear - I left the <code>$.loanInfo( param_obj );</code> function public, so you can directly call it to perform a calculation and get a JSON response.</p>
-			<script src="https://gist.github.com/jpederson/9497384.js"></script>
-
-			<div class="pad">
-				<dt><code>amount</code></dt>
-					<dd>The <code>amount</code> property can contain any characters. All but the numbers <code>0123456789</code> and dots <code>.</code> will be stripped out, so that no errors can occur - even when those wonderful users enter characters that have no place in math equations.</dd>
-				<dt><code>rate</code></dt>
-					<dd>The <code>rate</code> property will get the same cleaning treatment as the <code>amount</code>, so no worries when it comes to bad math characters. The function expects the rate to be APR.</dd>
-				<dt><code>term</code></dt>
-					<dd>The <code>term</code> property is treated differently than the other two properties. It will take values of either years or months, and will assume months. Specify these values by entering a number and then either <code>m</code> (months) or <code>y</code> (years) - though the letter is not required, and if only a number is passed, it's assumed to be a month count, or number of payments.</dd>
-				<p><small>The numbers in the snippet above are populated just as an example of the type of input this function could accept. The default values for all of the object properties is <code>0</code></small></p>
-			</div>
-
-			<h3>Response JSON</h3>
-			<p>The code sample above would output this JSON object in the javascript console.</p>
-			<script src="https://gist.github.com/jpederson/9497439.js"></script>
+			<h3>More Documentation</h3>
+			<p>View the <a href="https://github.com/jpederson/Accrue.js/wiki">wiki</a> for detailed instructions about any of the calculator modes and all the additional options and features.</p>
 
 		</div>
 	</div>
