@@ -1,17 +1,16 @@
 Accrue.js
-=========
 
 A loan and interest calculation plugin for jQuery.
 
+*****
 
-What You Need
-=========
+### What You Need
 
 The only file you need (besides a jQuery library) is jquery.accrue.min.js. The included css file is only for the example page. The intent is that you specify your own styles, and it will be nice that you don't have to override any of my crap. :)
 
+*****
 
-Usage
-=========
+### Usage
 
 For the most basic usage of the plugin, all you need is the code below. Of course, you may need to adjust src properties based on where you store files, and you'll want to add styles - but the core functionality will be there.
 
@@ -26,5 +25,5 @@ $(document).ready(function(){
 </script>
 ```
 
-For more information on the different options and customizations, refer to the index.html file in this repo, or visit http://accruejs.com/ to see the same demos and documentation from the example file.
-
+#### [View Demos](http://accruejs.com)
+#### [Documentation](https://github.com/jpederson/Accrue.js/wiki)
