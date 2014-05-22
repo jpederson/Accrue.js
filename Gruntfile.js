@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ['jquery.accrue.js'],
-                tasks: ['uglify'],
+                tasks: ['uglify', 'jshint'],
                 options: {
                     livereload: true,
                 },
@@ -44,7 +44,14 @@ module.exports = function(grunt) {
                     'jquery.accrue.min.js': 'jquery.accrue.js',
                 }
             }
+        },
+        
+
+        // lint me.
+        jshint: {
+            all: ['jquery.accrue.js']
         }
+
 
     });
 

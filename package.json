@@ -6,6 +6,7 @@
         "grunt-contrib-cssmin":         "*",
         "grunt-contrib-sass":           "*",
         "grunt-contrib-uglify":         "*",
+        "grunt-contrib-jshint":         "*",
         "grunt-contrib-watch":          "*",
         "matchdep":                     "*"
     }

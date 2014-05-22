@@ -40,33 +40,38 @@
                 }
 
                 // If we are using the default results div and it doesn't exist, create it.
-                if ( options.response_output_div===".results" ) {
-                    if ( elem.find(".results").length==0 ) {
+                var output_elem;
+                if ( options.response_output_div === ".results" ) {
+                
+                    if ( elem.find(".results").length === 0 ) {
                         elem.append('<div class="results"></div>');
                     }
+
                     // Set the output div as a variable so we can refer to it more easily.
-                    var output_elem=elem.find(".results");
+                    output_elem = elem.find(".results");
+                
                 } else {
 
                     // Set the output div as a variable so we can refer to it more easily.
-                    var output_elem=$(options.response_output_div);
+                    output_elem = $(options.response_output_div);
 
                 }
 
 
                 // Set the calculation method based on which mode we're in.
+                var calculation_method;
                 switch ( options.mode ) {
 
                     case "basic":
-                        var calculation_method = calculateBasic;
+                        calculation_method = calculateBasic;
                     break;
 
                     case "compare":
-                        var calculation_method = calculateComparison;
+                        calculation_method = calculateComparison;
                     break;
 
                     case "amortization":
-                        var calculation_method = calculateAmortization;
+                        calculation_method = calculateAmortization;
                     break;
 
                 }
@@ -79,7 +84,7 @@
                 if ( options.operation=="button" ) {
 
                     // If we are using button operation mode and the button doesn't exist, create one.
-                    if ( elem.find("button").length==0 ) {
+                    if ( elem.find("button").length === 0 ) {
                         elem.find(".form").append('<button class="accrue-calculate">'+options.button_label+'</button>');
                     }
 
@@ -154,7 +159,7 @@
         response_compare: "Save $%savings% in interest!",
         error_text: "Please fill in all fields.",
         callback: function ( elem, data ){}
-    }
+    };
 
 
 
@@ -183,7 +188,7 @@
         elem.find(".form").append('<div class="accrue-field-'+name+'"><p><label>'+options.field_titles[name]+':</label><input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+( options.field_comments[name].length>0 ? "<small>"+options.field_comments[name]+"</small>" : '' )+'</p></div>');
         return elem.find("."+name).val();
 
-    }
+    };
 
 
 
@@ -221,7 +226,7 @@
         // run the callback function after the calculation is done, including
         // the calculation info so it's available in the callback.
         options.callback( elem, loan_info );
-    }
+    };
 
 
 
@@ -288,7 +293,7 @@
 
         // run the callback, passing our loan data into it.
         options.callback( elem, callback_data );
-    }
+    };
 
 
 
@@ -320,7 +325,7 @@
                     '<th class="accrue-balance">Balance</th>'+
                     '</tr>',
                 interest_per_payment = loan_info.payment_amount-(loan_info.original_amount/loan_info.num_payments),
-                amount_from_balance = loan_info.payment_amount-interest_per_payment;
+                amount_from_balance = loan_info.payment_amount-interest_per_payment,
                 counter_interest = 0,
                 counter_payment = 0,
                 counter_balance = parseInt(loan_info.original_amount);
@@ -365,7 +370,7 @@
 
         // Execute callback, passing in loan information.
         options.callback( elem, loan_info );
-    }
+    };
 
 
 
@@ -376,7 +381,7 @@
         if ( window.console ) {
             console.log( message );
         }
-    }
+    };
 
 
 
