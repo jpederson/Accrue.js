@@ -170,7 +170,16 @@
     var get_field = function( elem, options, name ) {
 
         // Check for an input with a class of the name.
-        var field=( elem.find("."+name).length ? elem.find("."+name) : ( elem.find(".accrue-"+name).length ? elem.find(".accrue-"+name) : ( elem.find( "input[name~="+name+"]" ).length ? elem.find( "input[name~="+name+"]" ) : "" ) ) );
+        var field;
+        if ( elem.find(".accrue-"+name).length ) { // if has a class of accrue-[name]
+            field = elem.find(".accrue-"+name);
+        } else if ( elem.find("."+name).length ) { // if we have class of just the name
+            field = elem.find("."+name);
+        } else if ( elem.find( "input[name~="+name+"]" ).length ) {
+            elem.find( "input[name~="+name+"]" );
+        } else {
+            field = "";
+        }
         
         // If we have the field value, return it right away so that the
         // calculator doesn't write the field to the form div since we
@@ -185,7 +194,12 @@
 
         // If we've gotten here, no fields were found that match the
         // criteria. Create the form field and return the default value.
-        elem.find(".form").append('<div class="accrue-field-'+name+'"><p><label>'+options.field_titles[name]+':</label><input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+( options.field_comments[name].length>0 ? "<small>"+options.field_comments[name]+"</small>" : '' )+'</p></div>');
+        elem.find(".form").append(
+            '<div class="accrue-field-'+name+'">'+
+                '<p><label>'+options.field_titles[name]+':</label>'+
+                '<input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+
+                ( options.field_comments[name].length>0 ? "<small>"+options.field_comments[name]+"</small>" : '' )+'</p>'+
+            '</div>');
         return elem.find("."+name).val();
 
     };
@@ -274,14 +288,14 @@
             // the real difference in interest.
             var output_content = options.response_compare
                 .replace( "%savings%", callback_data.savings.toFixed(2) )
-                .replace( "%a_payment_amount%", loan_2_info.payment_amount_formatted )
-                .replace( "%a_num_payments%", loan_2_info.num_payments )
-                .replace( "%a_total_payments%", loan_2_info.total_payments_formatted )
-                .replace( "%a_total_interest%", loan_2_info.total_interest_formatted )
-                .replace( "%b_payment_amount%", loan_1_info.payment_amount_formatted )
-                .replace( "%b_num_payments%", loan_1_info.num_payments )
-                .replace( "%b_total_payments%", loan_1_info.total_payments_formatted )
-                .replace( "%b_total_interest%", loan_1_info.total_interest_formatted );
+                .replace( "%loan_1_payment_amount%", loan_2_info.payment_amount_formatted )
+                .replace( "%loan_1_num_payments%", loan_2_info.num_payments )
+                .replace( "%loan_1_total_payments%", loan_2_info.total_payments_formatted )
+                .replace( "%loan_1_total_interest%", loan_2_info.total_interest_formatted )
+                .replace( "%loan_2_payment_amount%", loan_1_info.payment_amount_formatted )
+                .replace( "%loan_2_num_payments%", loan_1_info.num_payments )
+                .replace( "%loan_2_total_payments%", loan_1_info.total_payments_formatted )
+                .replace( "%loan_2_total_interest%", loan_1_info.total_interest_formatted );
             output_elem.html( '<p class="total-savings">'+output_content+'</p>' );
         
         } else {
