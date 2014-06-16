@@ -1,6 +1,10 @@
 {
-    "name" : "accruejs",
-    "version" : "1.0.0",
+    "name" : "accrue",
+    "version" : "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/jpederson/Accrue.js.git"
+    },
     "devDependencies" : {
         "grunt" :                       "latest",
         "grunt-contrib-cssmin":         "*",
