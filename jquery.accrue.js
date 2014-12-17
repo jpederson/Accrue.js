@@ -29,8 +29,9 @@
                     elem.append( '<div class="form"></div>' );
                 }
 
-                // Get the amount, rate(s), and term - and clean the values
+                // Get the amount, down payment, rate(s), and term - and clean the values
                 var amount = get_field( elem, options, "amount" );
+                var amtdown = get_field( elem, options, "amtdown" );
                 var rate = get_field( elem, options, "rate" );
                 var term = get_field( elem, options, "term" );
 
@@ -133,12 +134,14 @@
         operation: "keyup",
         default_values: {
             amount: "$7,500",
+            amtdown: "$1,000",
             rate: "7%",
             rate_compare: "1.49%",
             term: "36m",
         },
         field_titles: {
             amount: "Loan Amount",
+            amtdown: "Down Payment",
             rate: "Rate (APR)",
             rate_compare: "Comparison Rate",
             term: "Term"
@@ -146,6 +149,7 @@
         button_label: "Calculate",
         field_comments: {
             amount: "",
+            amtdown: "",
             rate: "",
             rate_compare: "",
             term: "Format: 12m, 36m, 3y, 7y"
@@ -168,8 +172,8 @@
     // We need this because if the field doesn't exist, the plugin will
     // create it for them.
     var get_field = function( elem, options, name ) {
-
-        // Check for an input with a class of the name.
+		
+		// Check for an input with a class of the name.
         var field;
         if ( elem.find(".accrue-"+name).length ) { // if has a class of accrue-[name]
             field = elem.find(".accrue-"+name);
@@ -197,7 +201,8 @@
         elem.find(".form").append(
             '<div class="accrue-field-'+name+'">'+
                 '<p><label>'+options.field_titles[name]+':</label>'+
-                '<input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+
+                '<input type="text" class="'+name+'" value="'+options.default_values[name]+'" /><br />'+
+                 '<input type="text" class="'+name+'" value="'+options.default_values[name]+'" />'+
                 ( options.field_comments[name].length>0 ? "<small>"+options.field_comments[name]+"</small>" : '' )+'</p>'+
             '</div>');
         return elem.find("."+name).val();
@@ -214,6 +219,7 @@
         // get the loan information from the current values in the form.
         var loan_info = $.loanInfo({
             amount: get_field( elem, options, "amount" ),
+            amtdown: get_field( elem, options, "amtdown" ),
             rate: get_field( elem, options, "rate" ),
             term: get_field( elem, options, "term" )
         });
@@ -234,7 +240,7 @@
         } else {
 
             // if the values for the loan calculation aren't valid, provide an error.
-            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
+            output_elem.html( '<div style="color:#a94442;background-color:#f2dede;border-color:#ebccd1;padding:8px;">' + options.error_text + '</div>');
         }
 
         // run the callback function after the calculation is done, including
@@ -262,6 +268,7 @@
         // our callback function.
         var loan_1_info = $.loanInfo({
                 amount: get_field( elem, options, "amount" ),
+                amtdown: get_field( elem, options, "amtdown"),
                 rate: get_field( elem, options, "rate" ),
                 term: get_field( elem, options, "term" )
             }),
@@ -320,6 +327,7 @@
         // schedule table.
         var loan_info = $.loanInfo({
                 amount: get_field( elem, options, "amount" ),
+                amtdown: get_field( elem, options, "amtdown" ),
                 rate: get_field( elem, options, "rate" ),
                 term: get_field( elem, options, "term" )
             });
@@ -407,6 +415,7 @@
 	$.loanInfo = function( input ) {
 
         var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).replace(/[^\d.]/ig, ''),
+        	amtdown = ( typeof( input.amtdown )!=="undefined" ? input.amtdown : 0 ).replace(/[^\d.]/ig, ''),
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
 
@@ -422,21 +431,21 @@
 
         // Now compute the monthly payment amount.
         var x = Math.pow(1 + monthly_interest, term),
-            monthly = (amount*x*monthly_interest)/(x-1);
+            monthly = ((amount-amtdown)*x*monthly_interest)/(x-1);
 
         // If the result is a finite number, the user's input was good and
         // we have meaningful results to display
-        if ( amount*rate*term>0 ) {
+        if ( (amount+amtdown)*rate*term>0 ) {
             // Fill in the output fields, rounding to 2 decimal places
             return {
                 original_amount: amount,
                 payment_amount: monthly,
-                payment_amount_formatted: monthly.toFixed(2),
+                payment_amount_formatted: formatNumber ( monthly.toFixed(2) ),
                 num_payments: term,
                 total_payments: ( monthly * term ), 
-                total_payments_formatted: ( monthly * term ).toFixed(2), 
-                total_interest: ( ( monthly * term ) - amount ),
-                total_interest_formatted: ( ( monthly * term ) - amount ).toFixed(2)
+                total_payments_formatted: formatNumber ( ( monthly * term ).toFixed(2) ), 
+                total_interest: ( ( monthly * term ) - (amount-amtdown) ),
+                total_interest_formatted: formatNumber ( ( ( monthly * term ) - (amount-amtdown) ).toFixed(2) )
             };
         } else {
             // The numbers provided won't provide good data as results,
@@ -447,3 +456,7 @@
     };
 
 })( jQuery, window, document );
+
+function formatNumber (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
