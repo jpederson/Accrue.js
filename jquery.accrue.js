@@ -14,15 +14,15 @@
 
             // set our options from the defaults, overriding with the
             // parameter we pass into this function.
-			options = $.extend( { calculationMethod: calculateBasic }, $.fn.accrue.options, options );
+            options = $.extend( { calculationMethod: calculateBasic }, $.fn.accrue.options, options );
 
             // Iterate through all the matching elements and return
             // the jquery object to preserve chaining.
-	        return this.each(function(){
+            return this.each(function(){
 
                 // Store a jQuery object for our element so we can use it
                 // inside our other bindings.
-	            var elem = $(this);
+                var elem = $(this);
 
                 // Create the form div if it doesn't exist.
                 if ( !elem.find(".form").length ) {
@@ -120,8 +120,8 @@
                     });
                 });
 
-	        });
-	    }
+            });
+        }
     });
 
 
@@ -156,8 +156,8 @@
             '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
             '<p><strong>Total Payments:</strong><br />$%total_payments%</p>'+
             '<p><strong>Total Interest:</strong><br />$%total_interest%</p>',
-        response_compare: "Save $%savings% in interest!",
-        error_text: "Please fill in all fields.",
+        response_compare: '<p class="total-savings">Save $%savings% in interest!</p>',
+        error_text: '<p class="error">Please fill in all fields.</p>',
         callback: function ( elem, data ){}
     };
 
@@ -234,7 +234,7 @@
         } else {
 
             // if the values for the loan calculation aren't valid, provide an error.
-            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
+            output_elem.html( options.error_text );
         }
 
         // run the callback function after the calculation is done, including
@@ -296,12 +296,12 @@
                 .replace( "%loan_2_num_payments%", loan_1_info.num_payments )
                 .replace( "%loan_2_total_payments%", loan_1_info.total_payments_formatted )
                 .replace( "%loan_2_total_interest%", loan_1_info.total_interest_formatted );
-            output_elem.html( '<p class="total-savings">'+output_content+'</p>' );
+            output_elem.html( output_content );
         
         } else {
 
             // output an error
-            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
+            output_elem.html( options.error_text );
 
         }
 
@@ -379,7 +379,7 @@
         } else {
 
             // Values aren't good yet, show the error.
-            output_elem.html( '<p class="error">'+options.error_text+'</p>' );
+            output_elem.html( options.error_text );
         }
 
         // Execute callback, passing in loan information.
@@ -404,7 +404,7 @@
     // and we're exposing it here so that we can also provide generic
     // calculations that just return JSON objects that can be used
     // for custom-developed plugins.
-	$.loanInfo = function( input ) {
+    $.loanInfo = function( input ) {
 
         var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).replace(/[^\d.]/ig, ''),
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).replace(/[^\d.]/ig, ''),
