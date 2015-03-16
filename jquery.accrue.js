@@ -84,14 +84,14 @@
                 if ( options.operation=="button" ) {
 
                     // If we are using button operation mode and the button doesn't exist, create one.
-                    if ( elem.find("button").length === 0 ) {
+                    if ( elem.find("button").length === 0 && elem.find("input[type=submit]").length === 0 && elem.find("input[type=image]").length === 0 ) {
                         elem.find(".form").append('<button class="accrue-calculate">'+options.button_label+'</button>');
                     }
 
                     // If the developer has chosen to bind to a button instead
                     // of operate on keyup, let's set up a click event binding
                     // that performs the calculation.
-                    elem.find("button, input[type=submit]").each(function(){
+                    elem.find("button, input[type=submit], input[type=image]").each(function(){
                         $(this).click(function( event ){
                             event.preventDefault();
                             calculation_method( elem, options, output_elem );
