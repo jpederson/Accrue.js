@@ -331,13 +331,13 @@
             // per payment, amount from balance, and counter variables
             // to values as we list rows.
             var output_content = '<table class="accrue-amortization">'+
-                    '<tr>'+
+                    '<thead><tr>'+
                     '<th class="accrue-payment-number">#</th>'+
                     '<th class="accrue-payment-amount">Payment Amt.</th>'+
                     '<th class="accrue-total-interest">Total Interest</th>'+
                     '<th class="accrue-total-payments">Total Payments</th>'+
                     '<th class="accrue-balance">Balance</th>'+
-                    '</tr>',
+                    '</tr></thead><tbody>',
                 interest_per_payment = loan_info.payment_amount-(loan_info.original_amount/loan_info.num_payments),
                 amount_from_balance = loan_info.payment_amount-interest_per_payment,
                 counter_interest = 0,
@@ -372,7 +372,7 @@
 
             // Finish off our table tag.
             output_content = output_content+
-                '</table>';
+                '</tbody></table>';
 
             // Push our output content into the output element.
             output_elem.html( output_content );
@@ -385,7 +385,6 @@
         // Execute callback, passing in loan information.
         options.callback( elem, loan_info );
     };
-
 
 
     // BASIC LOGGING FUNCTION
