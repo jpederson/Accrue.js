@@ -161,7 +161,12 @@
         callback: function ( elem, data ){}
     };
 
-
+	// FORMAT MONEY
+	// This function is used to add thousand seperators to numerical ouput
+	// as a means of properly formatting money
+    function formatNumber (num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
 
     // GET FIELD
     // A function just for grabbing the value from a particular field.
@@ -223,10 +228,10 @@
 
             // replace the placeholders with the response values.
             var output_content = options.response_basic
-                .replace( "%payment_amount%", loan_info.payment_amount_formatted )
+                .replace( "%payment_amount%", formatNumber(loan_info.payment_amount_formatted) )
                 .replace( "%num_payments%", loan_info.num_payments )
-                .replace( "%total_payments%", loan_info.total_payments_formatted )
-                .replace( "%total_interest%", loan_info.total_interest_formatted );
+                .replace( "%total_payments%",formatNumber(loan_info.total_payments_formatted) )
+                .replace( "%total_interest%", formatNumber(loan_info.total_interest_formatted) );
 
             // output the content to the actual output element.
             output_elem.html( output_content );
@@ -287,15 +292,15 @@
             // replace our savings placeholder in the response text with
             // the real difference in interest.
             var output_content = options.response_compare
-                .replace( "%savings%", callback_data.savings.toFixed(2) )
-                .replace( "%loan_1_payment_amount%", loan_2_info.payment_amount_formatted )
+                .replace( "%savings%", formatNumber(callback_data.savings.toFixed(2)) )
+                .replace( "%loan_1_payment_amount%", formatNumber(loan_2_info.payment_amount_formatted) )
                 .replace( "%loan_1_num_payments%", loan_2_info.num_payments )
                 .replace( "%loan_1_total_payments%", loan_2_info.total_payments_formatted )
-                .replace( "%loan_1_total_interest%", loan_2_info.total_interest_formatted )
-                .replace( "%loan_2_payment_amount%", loan_1_info.payment_amount_formatted )
+                .replace( "%loan_1_total_interest%", formatNumber(loan_2_info.total_interest_formatted) )
+                .replace( "%loan_2_payment_amount%", formatNumber(loan_1_info.payment_amount_formatted) )
                 .replace( "%loan_2_num_payments%", loan_1_info.num_payments )
                 .replace( "%loan_2_total_payments%", loan_1_info.total_payments_formatted )
-                .replace( "%loan_2_total_interest%", loan_1_info.total_interest_formatted );
+                .replace( "%loan_2_total_interest%", formatNumber(loan_1_info.total_interest_formatted) );
             output_elem.html( output_content );
         
         } else {
@@ -308,8 +313,6 @@
         // run the callback, passing our loan data into it.
         options.callback( elem, callback_data );
     };
-
-
 
     // CALCULATE AMORTIZATION SCHEDULE
     // This method outputs a table with the repayment schedule
@@ -363,10 +366,10 @@
                 output_content = output_content+ 
                     '<tr>'+
                     '<'+cell_tag+' class="accrue-payment-number">'+(i+1)+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-payment-amount">$'+loan_info.payment_amount_formatted+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-total-interest">$'+counter_interest.toFixed(2)+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-total-payments">$'+counter_payment.toFixed(2)+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-balance">$'+counter_balance.toFixed(2)+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-payment-amount">$'+formatNumber(loan_info.payment_amount_formatted)+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-total-interest">$'+formatNumber(counter_interest.toFixed(2))+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-total-payments">$'+formatNumber(counter_payment.toFixed(2))+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-balance">$'+formatNumber(counter_balance.toFixed(2))+'</'+cell_tag+'>'+
                     '</tr>';
             }
 
