@@ -32,6 +32,12 @@ $(document).ready(function(){
 git clone git@github.com:jpederson/Accrue.js.git accruejs
 ```
 
+##### Via NPM
+
+```
+npm install accrue
+```
+
 ##### Via Bower
 
 ```
