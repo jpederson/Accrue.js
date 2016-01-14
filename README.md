@@ -24,6 +24,22 @@ $(document).ready(function(){
 
 *****
 
+### Install Methods
+
+##### Via Github
+
+```
+git clone git@github.com:jpederson/Accrue.js.git accruejs
+```
+
+##### Via Bower
+
+```
+bower install accruejs
+```
+
+*****
+
 ### Contributing
 
 To contribute, you'll need [nodejs](http://nodejs.org/) and [Grunt](http://gruntjs.com/) installed. Fork and clone the repo, then visit the directory in the terminal and type `npm install`. After that you can simply run the `grunt` command to watch the files in the project. It'll automatically lint, test, compile, and minify the plugin files so you can just code.
