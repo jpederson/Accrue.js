@@ -135,7 +135,7 @@
             amount: "$7,500",
             rate: "7%",
             rate_compare: "1.49%",
-            term: "36m",
+            term: "36m"
         },
         field_titles: {
             amount: "Loan Amount",
@@ -345,7 +345,7 @@
                 amount_from_balance = loan_info.payment_amount-interest_per_payment,
                 counter_interest = 0,
                 counter_payment = 0,
-                counter_balance = parseInt(loan_info.original_amount);
+                counter_balance = parseInt(loan_info.original_amount, 10);
 
             // Start appending the table rows to our output variable.
             for ( var i=0; i<loan_info.num_payments; i++) { 
@@ -408,15 +408,15 @@
     // for custom-developed plugins.
     $.loanInfo = function( input ) {
 
-        var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).replace(/[^\d.]/ig, ''),
-            rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).replace(/[^\d.]/ig, ''),
+        var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).toString().replace(/[^\d.]/ig, ''),
+            rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
 
         // parse year values passed into the term value
         if ( term.match("y") ) {
-            term = parseInt( term.replace(/[^\d.]/ig, '') )*12;
+            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
         } else {
-            term = parseInt( term.replace(/[^\d.]/ig, '') );
+            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
         }
 
         // process the input values
