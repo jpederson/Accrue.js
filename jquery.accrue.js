@@ -42,14 +42,14 @@
                 // If we are using the default results div and it doesn't exist, create it.
                 var output_elem;
                 if ( options.response_output_div === ".results" ) {
-                
+
                     if ( elem.find(".results").length === 0 ) {
                         elem.append('<div class="results"></div>');
                     }
 
                     // Set the output div as a variable so we can refer to it more easily.
                     output_elem = elem.find(".results");
-                
+
                 } else {
 
                     // Set the output div as a variable so we can refer to it more easily.
@@ -76,7 +76,6 @@
 
                 }
 
-
                 // Get the information about the loan.
                 calculation_method( elem, options, output_elem );
 
@@ -99,6 +98,16 @@
                     });
 
                 } else {
+
+                    // bind the calculation event to a specific field passed in
+                    Object.keys(options.target_fields).forEach(function (field, index) {
+                        var field = options.target_fields[field] || undefined;
+                        if (field) {
+                            field.bind( "keyup change", function(){
+                                calculation_method( elem, options, output_elem );
+                            });
+                        }
+                    });
 
                     // Bind to the select and input elements so that we calculate
                     // on keyup (or change in the case of the select list).
@@ -135,7 +144,7 @@
             amount: "$7,500",
             rate: "7%",
             rate_compare: "1.49%",
-            term: "36m"
+            term: "36m",
         },
         field_titles: {
             amount: "Loan Amount",
@@ -151,19 +160,25 @@
             term: "Format: 12m, 36m, 3y, 7y"
         },
         response_output_div: ".results",
-        response_basic: 
+        response_basic:
             '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>'+
             '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
             '<p><strong>Total Payments:</strong><br />$%total_payments%</p>'+
             '<p><strong>Total Interest:</strong><br />$%total_interest%</p>',
         response_compare: '<p class="total-savings">Save $%savings% in interest!</p>',
         error_text: '<p class="error">Please fill in all fields.</p>',
-        callback: function ( elem, data ){}
+        callback: function ( elem, data ){},
+        target_fields: {
+            amount: undefined,
+            rate: undefined,
+            rate_compare: undefined,
+            term: undefined,
+        }
     };
 
-	// FORMAT MONEY
-	// This function is used to add thousand seperators to numerical ouput
-	// as a means of properly formatting money
+    // FORMAT MONEY
+    // This function is used to add thousand seperators to numerical ouput
+    // as a means of properly formatting money
     function formatNumber (num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
@@ -175,17 +190,19 @@
     var get_field = function( elem, options, name ) {
 
         // Check for an input with a class of the name.
-        var field;
-        if ( elem.find(".accrue-"+name).length ) { // if has a class of accrue-[name]
-            field = elem.find(".accrue-"+name);
-        } else if ( elem.find("."+name).length ) { // if we have class of just the name
-            field = elem.find("."+name);
-        } else if ( elem.find( "input[name~="+name+"]" ).length ) {
-            elem.find( "input[name~="+name+"]" );
-        } else {
-            field = "";
+        var field = options.target_fields[name] || null;
+        if (field === null) {
+            if ( elem.find(".accrue-"+name).length ) { // if has a class of accrue-[name]
+                field = elem.find(".accrue-"+name);
+            } else if ( elem.find("."+name).length ) { // if we have class of just the name
+                field = elem.find("."+name);
+            } else if ( elem.find( "input[name~="+name+"]" ).length ) {
+                elem.find( "input[name~="+name+"]" );
+            } else {
+                field = "";
+            }
         }
-        
+
         // If we have the field value, return it right away so that the
         // calculator doesn't write the field to the form div since we
         // don't need it to.
@@ -345,7 +362,7 @@
                 amount_from_balance = loan_info.payment_amount-interest_per_payment,
                 counter_interest = 0,
                 counter_payment = 0,
-                counter_balance = parseInt(loan_info.original_amount, 10);
+                counter_balance = parseInt(loan_info.original_amount);
 
             // Start appending the table rows to our output variable.
             for ( var i=0; i<loan_info.num_payments; i++) { 
@@ -408,15 +425,15 @@
     // for custom-developed plugins.
     $.loanInfo = function( input ) {
 
-        var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).toString().replace(/[^\d.]/ig, ''),
-            rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
+        var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).replace(/[^\d.]/ig, ''),
+            rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
 
         // parse year values passed into the term value
         if ( term.match("y") ) {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
+            term = parseInt( term.replace(/[^\d.]/ig, '') )*12;
         } else {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
+            term = parseInt( term.replace(/[^\d.]/ig, '') );
         }
 
         // process the input values
@@ -440,55 +457,6 @@
                 total_interest: ( ( monthly * term ) - amount ),
                 total_interest_formatted: ( ( monthly * term ) - amount ).toFixed(2)
             };
-        } else {
-            // The numbers provided won't provide good data as results,
-            // so we'll return 0 so it's easy to test if one of the fields
-            // is empty or invalid.
-            return 0;
-        }
-    };
-    
-    
-    
-    // REVERSE LOAN INFORMATION FUNCTION
-    // This is a copy of the above, only that given a payment amount, rate and term it
-    // will return the principal amount that can be borrowed.
-    $.loanAmount = function( input ) {
-
-        var payment = ( typeof( input.payment )!=="undefined" ? input.payment : 0 ).toString().replace(/[^\d.]/ig, ''),
-            rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
-            term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
-
-        // parse year values passed into the term value
-        if ( term.match("y") ) {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
-        } else {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
-        }
-
-        // process the input values
-        var monthly_interest = rate / 100 / 12,
-            annual_interest = rate / 100;
-
-        // Now compute.
-        var x = payment * (1 - Math.pow(1 + monthly_interest, -1 * term)) * (12/(annual_interest));
-                
-        // If the result is a finite number, the user's input was good and
-        // we have meaningful results to display
-        if ( x>0 ) {
-            // Fill in the output fields, rounding to 2 decimal places
-            return {
-                principal_amount: x,
-                principal_amount_formatted: ( x * 1 ).toFixed(2),
-                payment_amount: payment,
-                payment_amount_formatted: ( payment * 1 ).toFixed(2),
-                num_payments: term,
-                total_payments: ( payment * term ), 
-                total_payments_formatted: ( payment * term ).toFixed(2), 
-                total_interest: ( ( payment * term ) - x ),
-                total_interest_formatted: ( ( payment * term ) - x ).toFixed(2)
-            };
-
         } else {
             // The numbers provided won't provide good data as results,
             // so we'll return 0 so it's easy to test if one of the fields
