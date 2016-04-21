@@ -148,7 +148,7 @@
             amount: "",
             rate: "",
             rate_compare: "",
-            term: "Format: 12m, 36m, 3y, 7y"
+            term: "Format: 5w, 10f, 12m, 36m, 3y, 7y"
         },
         response_output_div: ".results",
         response_basic: 
@@ -412,19 +412,25 @@
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
 
+        // process the input values
+        var interest = rate / 100 / 12;
+
         // parse year values passed into the term value
         if ( term.match("y") ) {
             term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
         } else {
+            if ( term.match("w") ) {
+                interest = rate / 100 / 52;
+            } else if ( term.match("f") ) {
+                interest = rate / 100 / 26;
+            }
+
             term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
         }
 
-        // process the input values
-        var monthly_interest = rate / 100 / 12;
-
         // Now compute the monthly payment amount.
-        var x = Math.pow(1 + monthly_interest, term),
-            monthly = (amount*x*monthly_interest)/(x-1);
+        var x = Math.pow(1 + interest, term),
+            payment_amount = (amount*x*interest)/(x-1);
 
         // If the result is a finite number, the user's input was good and
         // we have meaningful results to display
@@ -432,13 +438,13 @@
             // Fill in the output fields, rounding to 2 decimal places
             return {
                 original_amount: amount,
-                payment_amount: monthly,
-                payment_amount_formatted: monthly.toFixed(2),
+                payment_amount: payment_amount,
+                payment_amount_formatted: payment_amount.toFixed(2),
                 num_payments: term,
-                total_payments: ( monthly * term ), 
-                total_payments_formatted: ( monthly * term ).toFixed(2), 
-                total_interest: ( ( monthly * term ) - amount ),
-                total_interest_formatted: ( ( monthly * term ) - amount ).toFixed(2)
+                total_payments: ( payment_amount * term ), 
+                total_payments_formatted: ( payment_amount * term ).toFixed(2), 
+                total_interest: ( ( payment_amount * term ) - amount ),
+                total_interest_formatted: ( ( payment_amount * term ) - amount ).toFixed(2)
             };
         } else {
             // The numbers provided won't provide good data as results,
