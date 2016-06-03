@@ -31,6 +31,9 @@
 
                 // Get the amount, rate(s), and term - and clean the values
                 var amount = get_field( elem, options, "amount" );
+                if ( options.mode=="basic" ) {
+                    var down = get_field(elem, options, "down");
+                }
                 var rate = get_field( elem, options, "rate" );
                 var term = get_field( elem, options, "term" );
 
@@ -38,7 +41,6 @@
                 if ( options.mode=="compare" ) {
                     var rate_compare = get_field( elem, options, "rate_compare" );
                 }
-
                 // If we are using the default results div and it doesn't exist, create it.
                 var output_elem;
                 if ( options.response_output_div === ".results" ) {
@@ -133,19 +135,22 @@
         operation: "keyup",
         default_values: {
             amount: "$7,500",
+            down: "$0",
             rate: "7%",
             rate_compare: "1.49%",
             term: "36m"
         },
         field_titles: {
             amount: "Loan Amount",
+            down: "Down Payment",
             rate: "Rate (APR)",
             rate_compare: "Comparison Rate",
-            term: "Term"
+            term: "Term",
         },
         button_label: "Calculate",
         field_comments: {
             amount: "",
+            down: "in dollars",
             rate: "",
             rate_compare: "",
             term: "Format: 12m, 36m, 3y, 7y"
@@ -219,6 +224,7 @@
         // get the loan information from the current values in the form.
         var loan_info = $.loanInfo({
             amount: get_field( elem, options, "amount" ),
+            down: get_field(elem, options, "down"),
             rate: get_field( elem, options, "rate" ),
             term: get_field( elem, options, "term" )
         });
@@ -407,7 +413,7 @@
     // calculations that just return JSON objects that can be used
     // for custom-developed plugins.
     $.loanInfo = function( input ) {
-        input.down = 1000;
+
         var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).toString().replace(/[^\d.]/ig, ''),
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 ),
