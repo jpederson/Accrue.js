@@ -407,11 +407,11 @@
     // calculations that just return JSON objects that can be used
     // for custom-developed plugins.
     $.loanInfo = function( input ) {
-
+        input.down = 1000;
         var amount = ( typeof( input.amount )!=="undefined" ? input.amount : 0 ).toString().replace(/[^\d.]/ig, ''),
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
-            term = ( typeof( input.term )!=="undefined" ? input.term : 0 );
-
+            term = ( typeof( input.term )!=="undefined" ? input.term : 0 ),
+            down = ( typeof( input.down )!=="undefined" ? input.down : 0).toString().replace(/[^\d.]/ig, '');
         // parse year values passed into the term value
         if ( term.match("y") ) {
             term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
@@ -424,8 +424,8 @@
 
         // Now compute the monthly payment amount.
         var x = Math.pow(1 + monthly_interest, term),
-            monthly = (amount*x*monthly_interest)/(x-1);
-
+            monthly = ((amount-down)*x*monthly_interest)/(x-1);
+            console.log("monthly ", monthly);
         // If the result is a finite number, the user's input was good and
         // we have meaningful results to display
         if ( amount*rate*term>0 ) {
@@ -437,8 +437,8 @@
                 num_payments: term,
                 total_payments: ( monthly * term ), 
                 total_payments_formatted: ( monthly * term ).toFixed(2), 
-                total_interest: ( ( monthly * term ) - amount ),
-                total_interest_formatted: ( ( monthly * term ) - amount ).toFixed(2)
+                total_interest: ( ( monthly * term ) - ( amount - down ) ),
+                total_interest_formatted: ( ( monthly * term ) - ( amount - down ) ).toFixed(2)
             };
         } else {
             // The numbers provided won't provide good data as results,
@@ -469,10 +469,8 @@
         // process the input values
         var monthly_interest = rate / 100 / 12,
             annual_interest = rate / 100;
-
         // Now compute.
         var x = payment * (1 - Math.pow(1 + monthly_interest, -1 * term)) * (12/(annual_interest));
-                
         // If the result is a finite number, the user's input was good and
         // we have meaningful results to display
         if ( x>0 ) {
