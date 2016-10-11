@@ -17,10 +17,7 @@ For the most basic usage of the plugin, all you need is the code below. Of cours
 <script src="jquery.accrue.min.js"></script>
 <script>
 $(document).ready(function(){
-	$(".calculator").accrue({
-		//You can change Default currency USD($) by adding the line below with prefered currency prefix
-		currencyFormat: GBP
-	});
+	$(".calculator").accrue();
 });
 </script>
 ```
