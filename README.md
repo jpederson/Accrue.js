@@ -17,12 +17,28 @@ For the most basic usage of the plugin, all you need is the code below. Of cours
 <script src="jquery.accrue.min.js"></script>
 <script>
 $(document).ready(function(){
-	$(".calculator").accrue();
+	$(".calculator").accrue({
+		//You can change Default currency USD($) by adding the line below with prefered currency prefix
+		currencyFormat: GBP
+	});
 });
 </script>
 ```
 
 *****
+
+### Options
+Default currency USD($) in plugin can be changed as you initialize script through JS and provide the currency_symbol options with prefered currency prefix e.g GBP  
+
+```
+<script>
+$(document).ready(function(){
+	$(".calculator-loan").accrue({
+		currency_symbol: GBP
+	});
+});
+</script>
+```
 
 ### Install Methods
 
