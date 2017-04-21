@@ -17,7 +17,9 @@ For the most basic usage of the plugin, all you need is the code below. Of cours
 <script src="jquery.accrue.min.js"></script>
 <script>
 $(document).ready(function(){
-	$(".calculator").accrue();
+	$(".calculator").accrue(
+		currencyFormat: GBP,
+	);
 });
 </script>
 ```
