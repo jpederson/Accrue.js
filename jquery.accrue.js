@@ -1,6 +1,6 @@
 /*
  * Accrue.js
- * http://accruejs.com
+ * http://jpederson.com/Accrue.js/
  * Author: James Pederson (jpederson.com)
  * Licensed under the MIT, GPL licenses.
  * Version: 1.1.0
