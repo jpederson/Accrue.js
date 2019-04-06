@@ -132,6 +132,7 @@
         mode: "basic",
         operation: "keyup",
         currency: "USD",
+        language: "en",
         default_values: {
             amount: "7,500",
             rate: "7%",
@@ -166,11 +167,11 @@
 	// This function is used to add thousand seperators to numerical ouput
 	// as a means of properly formatting money
     function formatNumber( num, options ) {
-        var formatted = new Intl.NumberFormat('en-US', {
+        var formatted = new Intl.NumberFormat( options.language, {
             style: 'currency',
             currency: options.currency 
         }).format( num );
-        return formatted.replace('$$','$');
+        return formatted;
     }
 
     // GET FIELD
