@@ -5,6 +5,8 @@ A loan and interest calculation plugin for jQuery.
 #### [View Demos](http://accruejs.com)
 #### [Documentation](https://github.com/jpederson/Accrue.js/wiki)
 
+![Available on Github](https://img.shields.io/github/release/jpederson/Accrue.js.svg) ![Available on NPM](https://img.shields.io/npm/v/accrue.svg) ![Available on Bower](https://img.shields.io/bower/v/accruejs.svg) ![MIT](https://img.shields.io/github/license/jpederson/Accrue.js.svg)
+
 *****
 
 ### Quick Start
@@ -50,11 +52,5 @@ bower install accruejs
 
 To contribute, you'll need [nodejs](http://nodejs.org/) and [Grunt](http://gruntjs.com/) installed. Fork and clone the repo, then visit the directory in the terminal and type `npm install`. After that you can simply run the `grunt` command to watch the files in the project. It'll automatically lint, test, compile, and minify the plugin files so you can just code.
 
-[![Built with Grunt](https://gruntjs.com/cdn/builtwith.png)](http://gruntjs.com/)
-
-*****
-
-### License
-
-This project is proudly licensed under the MIT License
+![Built with Grunt](https://img.shields.io/badge/built%20with-grunt-orange.svg)
 
