@@ -131,8 +131,9 @@
     $.fn.accrue.options = {
         mode: "basic",
         operation: "keyup",
+        currency: "USD",
         default_values: {
-            amount: "$7,500",
+            amount: "7,500",
             rate: "7%",
             rate_compare: "1.49%",
             term: "36m"
@@ -152,11 +153,11 @@
         },
         response_output_div: ".results",
         response_basic: 
-            '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>'+
+            '<p><strong>Monthly Payment:</strong><br />%payment_amount%</p>'+
             '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
-            '<p><strong>Total Payments:</strong><br />$%total_payments%</p>'+
-            '<p><strong>Total Interest:</strong><br />$%total_interest%</p>',
-        response_compare: '<p class="total-savings">Save $%savings% in interest!</p>',
+            '<p><strong>Total Payments:</strong><br />%total_payments%</p>'+
+            '<p><strong>Total Interest:</strong><br />%total_interest%</p>',
+        response_compare: '<p class="total-savings">Save %savings% in interest!</p>',
         error_text: '<p class="error">Please fill in all fields.</p>',
         callback: function ( elem, data ){}
     };
@@ -164,8 +165,12 @@
 	// FORMAT MONEY
 	// This function is used to add thousand seperators to numerical ouput
 	// as a means of properly formatting money
-    function formatNumber (num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    function formatNumber( num, options ) {
+        var formatted = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: options.currency 
+        }).format( num );
+        return formatted.replace('$$','$');
     }
 
     // GET FIELD
@@ -228,10 +233,10 @@
 
             // replace the placeholders with the response values.
             var output_content = options.response_basic
-                .replace( "%payment_amount%", formatNumber(loan_info.payment_amount_formatted) )
+                .replace( "%payment_amount%", formatNumber( loan_info.payment_amount_formatted, options ) )
                 .replace( "%num_payments%", loan_info.num_payments )
-                .replace( "%total_payments%",formatNumber(loan_info.total_payments_formatted) )
-                .replace( "%total_interest%", formatNumber(loan_info.total_interest_formatted) );
+                .replace( "%total_payments%",formatNumber( loan_info.total_payments_formatted, options ) )
+                .replace( "%total_interest%", formatNumber( loan_info.total_interest_formatted, options ) );
 
             // output the content to the actual output element.
             output_elem.html( output_content );
@@ -292,15 +297,15 @@
             // replace our savings placeholder in the response text with
             // the real difference in interest.
             var output_content = options.response_compare
-                .replace( "%savings%", formatNumber(callback_data.savings.toFixed(2)) )
-                .replace( "%loan_1_payment_amount%", formatNumber(loan_2_info.payment_amount_formatted) )
+                .replace( "%savings%", formatNumber( callback_data.savings.toFixed(2), options ) )
+                .replace( "%loan_1_payment_amount%", formatNumber( loan_2_info.payment_amount_formatted, options ) )
                 .replace( "%loan_1_num_payments%", loan_2_info.num_payments )
                 .replace( "%loan_1_total_payments%", loan_2_info.total_payments_formatted )
-                .replace( "%loan_1_total_interest%", formatNumber(loan_2_info.total_interest_formatted) )
-                .replace( "%loan_2_payment_amount%", formatNumber(loan_1_info.payment_amount_formatted) )
+                .replace( "%loan_1_total_interest%", formatNumber( loan_2_info.total_interest_formatted, options ) )
+                .replace( "%loan_2_payment_amount%", formatNumber( loan_1_info.payment_amount_formatted, options ) )
                 .replace( "%loan_2_num_payments%", loan_1_info.num_payments )
                 .replace( "%loan_2_total_payments%", loan_1_info.total_payments_formatted )
-                .replace( "%loan_2_total_interest%", formatNumber(loan_1_info.total_interest_formatted) );
+                .replace( "%loan_2_total_interest%", formatNumber( loan_1_info.total_interest_formatted, options ) );
             output_elem.html( output_content );
         
         } else {
@@ -366,10 +371,10 @@
                 output_content = output_content+ 
                     '<tr>'+
                     '<'+cell_tag+' class="accrue-payment-number">'+(i+1)+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-payment-amount">$'+formatNumber(loan_info.payment_amount_formatted)+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-total-interest">$'+formatNumber(counter_interest.toFixed(2))+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-total-payments">$'+formatNumber(counter_payment.toFixed(2))+'</'+cell_tag+'>'+
-                    '<'+cell_tag+' class="accrue-balance">$'+formatNumber(counter_balance.toFixed(2))+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-payment-amount">'+formatNumber( loan_info.payment_amount_formatted, options )+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-total-interest">'+formatNumber( counter_interest.toFixed(2), options )+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-total-payments">'+formatNumber( counter_payment.toFixed(2), options )+'</'+cell_tag+'>'+
+                    '<'+cell_tag+' class="accrue-balance">'+formatNumber( counter_balance.toFixed(2), options )+'</'+cell_tag+'>'+
                     '</tr>';
             }
 

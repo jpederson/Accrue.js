@@ -1,17 +1,17 @@
 {
-    "name" : "accrue",
-    "version" : "0.0.2",
+    "name": "accrue",
+    "version": "0.1.0",
     "repository": {
         "type": "git",
         "url": "git://github.com/jpederson/Accrue.js.git"
     },
-    "devDependencies" : {
-        "grunt" :                       "latest",
-        "grunt-contrib-cssmin":         "*",
-        "grunt-contrib-sass":           "*",
-        "grunt-contrib-uglify":         "*",
-        "grunt-contrib-jshint":         "*",
-        "grunt-contrib-watch":          "*",
-        "matchdep":                     "*"
+    "devDependencies": {
+        "grunt": "latest",
+        "grunt-contrib-cssmin": "*",
+        "grunt-contrib-sass": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-watch": "*",
+        "matchdep": "*"
     }
 }
