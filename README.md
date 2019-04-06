@@ -1,13 +1,13 @@
-![Available on Github](https://img.shields.io/github/release/jpederson/Accrue.js.svg) ![Available on NPM](https://img.shields.io/npm/v/accrue.svg) ![Available on Bower](https://img.shields.io/bower/v/accruejs.svg) ![MIT](https://img.shields.io/github/license/jpederson/Accrue.js.svg)
-
-*****
-
 ### Accrue.js
 
 A loan and interest calculation plugin for jQuery.
 
 #### [View Demos](http://accruejs.com)
 #### [Documentation](https://github.com/jpederson/Accrue.js/wiki)
+
+*****
+
+![Available on Github](https://img.shields.io/github/release/jpederson/Accrue.js.svg) ![Available on NPM](https://img.shields.io/npm/v/accrue.svg) ![Available on Bower](https://img.shields.io/bower/v/accruejs.svg) ![MIT](https://img.shields.io/github/license/jpederson/Accrue.js.svg)
 
 *****
 
