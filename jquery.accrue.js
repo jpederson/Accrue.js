@@ -428,9 +428,9 @@
         var monthly_interest = rate / 100 / 12;
 
         // Now compute the monthly payment amount.
-        var x = Math.pow(1 + monthly_interest, term),
-            monthly = (amount*x*monthly_interest)/(x-1);
-
+        var x = Math.pow( 1 + monthly_interest, term), 
+            monthly = ( amount * x * monthly_interest ) / ( x - 1 );
+            
         // If the result is a finite number, the user's input was good and
         // we have meaningful results to display
         if ( amount*rate*term>0 ) {
