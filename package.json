@@ -1,17 +1,18 @@
 {
     "name": "accrue",
     "version": "1.0.0",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/jpederson/Accrue.js.git"
-    },
+    "repository": "git://github.com/jpederson/Accrue.js.git",
     "devDependencies": {
         "grunt": "latest",
         "grunt-contrib-cssmin": "*",
+        "grunt-contrib-jshint": "*",
         "grunt-contrib-sass": "*",
         "grunt-contrib-uglify": "*",
-        "grunt-contrib-jshint": "*",
         "grunt-contrib-watch": "*",
         "matchdep": "*"
-    }
+    },
+    "description": "A jQuery loan calculation plugin.",
+    "main": "jquery.accrue.js",
+    "author": "James Pederson <james@jpederson.com>",
+    "license": "MIT"
 }

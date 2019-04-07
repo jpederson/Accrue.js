@@ -42,6 +42,12 @@ git clone git@github.com:jpederson/Accrue.js.git accrue.js
 npm install accrue
 ```
 
+#### Via Yarn
+
+```
+yarn install accrue
+```
+
 *****
 
 ### Contributing
