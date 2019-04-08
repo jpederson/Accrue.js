@@ -5,6 +5,8 @@ A loan and interest calculation plugin for jQuery.
 #### [View Demos](http://accruejs.com)
 #### [Documentation](https://github.com/jpederson/Accrue.js/wiki)
 
+![preview](example.gif)
+
 *****
 
 ![Available on Github](https://img.shields.io/github/release/jpederson/Accrue.js.svg) ![Available on NPM](https://img.shields.io/npm/v/accrue.svg) ![MIT](https://img.shields.io/github/license/jpederson/Accrue.js.svg)
