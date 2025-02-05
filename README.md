@@ -21,7 +21,7 @@ A loan and interest calculation plugin for jQuery.
 #### Via Github
 
 ```
-https://github.com/jpederson/Accrue.js.git accrue.js
+git clone https://github.com/jpederson/Accrue.js.git accrue.js
 ```
 
 #### Via NPM
